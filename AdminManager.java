@@ -1,7 +1,7 @@
-package com.dao;
+package dao;
 
-import com.bean.Admin;
-import com.util.JDBCUtil;
+import bean.Admin;
+import util.BaseDao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,98 +10,92 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminManager implements  Adminint{
+public class AdminManager implements IAdminDao{
 
 
-    //向表admin里成功添加3条记录，Eclipse控制台打印输出：
     @Override
-    public void insert() {
+    public Admin show(Admin admin) {
 
-        String sql ="INSERT admin  VALUES(0,'admin_1','123456'),(0,'admin_2','6543216'),(0,'admin_3','abcdefg');";
-        Connection con = JDBCUtil.getcon();
+        String sql="SELECT *FROM admin WHERE adminName=? AND adminPwd=?;";
 
+        Connection con = BaseDao.getcon();
         try {
             PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1,admin.getAdminName());
+            ps.setString(2,admin.getAdminPwd());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
 
-            int i = ps.executeUpdate();
-            System.out.println("插入"+i+"条记录");
-            System.out.println("数据添加成功");
+                return  new Admin(rs.getInt(1),rs.getString(2),
+                        rs.getString(3));
 
-
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
-
+        return null;
     }
 
-    //查询表admin里的全部记录，Eclipse控制台打印输出：（5分）
     @Override
-    public List<Admin> findall() {
+    public int findall(Admin admin) {
 
-        ArrayList<Admin> arr = new ArrayList<>();
+        String sql="INSERT admin VALUES(0,?,?);";
 
-        String sql="SELECT *FROM admin ;";
-
-        Connection con = JDBCUtil.getcon();
-
+        Connection con = BaseDao.getcon();
         try {
             PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1,admin.getAdminPwd());
+            ps.setString(2,admin.getAdminPwd());
+            int i = ps.executeUpdate();
+            return i;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return 0;
+    }
 
+    public List<Admin> finaall(){
+
+        ArrayList<Admin> arr = new ArrayList<>();
+        Connection con = BaseDao.getcon();
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT *from admin;");
             ResultSet rs = ps.executeQuery();
-
             while (rs.next()){
 
                 Admin admin = new Admin(rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3));
-                        arr.add(admin);
+
+
+                arr.add(admin);
+
             }
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return arr;
+        return  arr;
     }
 
-    //修改表admin里用户名admin_3的密码为666999，然后查询，并在Eclipse控制台分别打印输出：（10分)
-    @Override
-    public void update() {
+    public  int update(Admin admin){
 
-        String sql="UPDATE admin SET adminPwd='666999' WHERE adminName='admin_3';";
+        String sql=" UPDATE admin SET adminName=? , adminPwd=? WHERE adminId=?;";
 
-        Connection con = JDBCUtil.getcon();
-
+        Connection con = BaseDao.getcon();
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-
+            ps.setString(1,admin.getAdminName());
+            ps.setString(2,admin.getAdminPwd());
+            ps.setInt(3,admin.getAdminId());
             int i = ps.executeUpdate();
-            System.out.println("更新"+i+"条记录");
-            System.out.println("数据更新成功！");
-
+            return i;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
+        return 0;
     }
 
-    @Override
-    public void delete() {
-
-        String sql="DELETE FROM admin WHERE adminName='admin_2';";
-
-        Connection con = JDBCUtil.getcon();
-
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-
-            int i = ps.executeUpdate();
-            System.out.println("删除"+i+"条记录");
-            System.out.println("数据删除成功！");
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-
-    }
 }
