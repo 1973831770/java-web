@@ -1,50 +1,50 @@
-package bean;
+package com.be.bean;
 
 public class Admin {
 
-    private  int adminId;
-    private  String adminName;
-    private  String adminPwd;
+    private  int  id;
+    private  String name;
+    private  String pwd;
 
     public Admin() {
     }
 
-    public Admin(int adminId, String adminName, String adminPwd) {
-        this.adminId = adminId;
-        this.adminName = adminName;
-        this.adminPwd = adminPwd;
+    public Admin(int id, String name, String pwd) {
+        this.id = id;
+        this.name = name;
+        this.pwd = pwd;
     }
 
     @Override
     public String toString() {
         return "Admin{" +
-                "adminId=" + adminId +
-                ", adminName='" + adminName + '\'' +
-                ", adminPwd='" + adminPwd + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", pwd='" + pwd + '\'' +
                 '}';
     }
 
-    public int getAdminId() {
-        return adminId;
+    public int getId() {
+        return id;
     }
 
-    public void setAdminId(int adminId) {
-        this.adminId = adminId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getAdminName() {
-        return adminName;
+    public String getName() {
+        return name;
     }
 
-    public void setAdminName(String adminName) {
-        this.adminName = adminName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getAdminPwd() {
-        return adminPwd;
+    public String getPwd() {
+        return pwd;
     }
 
-    public void setAdminPwd(String adminPwd) {
-        this.adminPwd = adminPwd;
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
 }

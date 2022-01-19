@@ -1,12 +1,10 @@
-package util;
-
+package com.be.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class BaseDao {
-
 
     static {
 
@@ -17,18 +15,15 @@ public class BaseDao {
         }
 
     }
-    public  static Connection  getcon(){
+
+    public  static Connection getcon(){
 
         try {
-            return  DriverManager.getConnection("jdbc:mysql:///day17", "root", "root");
+            return DriverManager.getConnection("jdbc:mysql:///newdb_12", "root", "root");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
-        return null;
+        return  null;
     }
-
-
-
-
 }

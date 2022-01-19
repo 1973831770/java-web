@@ -1,15 +1,11 @@
-package dao;
+package com.be.dao;
 
-import bean.Admin;
-
-import java.util.List;
+import com.be.bean.Admin;
 
 public interface IAdminDao {
 
 
-    public Admin  show(Admin admin);
 
-    public int  findall(Admin admin);
-
+    public Admin  login(Admin admin);
 
 }
